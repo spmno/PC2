@@ -1,0 +1,1 @@
+MXLogger =  Logger.new(STDOUT)

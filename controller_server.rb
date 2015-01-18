@@ -1,16 +1,19 @@
 require 'socket'
 require 'json'
+require 'logger'
 
 class ControllerServer
   def initialize
-    @server = TCPServer.new 9876
+    @server = TCPServer.new "0.0.0.0", 9876
     @server_container = {}
     @read_thread_container = []
   end
 
   def start
+    puts "controller server start"
     loop do
       client = @server.accept
+      p "server accepted client", client
       init_str = client.readline
       init_hash = JSON.parser init_str
       if init_hash['type'] == 'init' and init_hash['name'] == 'pad'
@@ -18,6 +21,7 @@ class ControllerServer
       else
         @server_container['pc2'] = client
       end
+      Thread.new { read_func client }
     end
   end
 
