@@ -6,7 +6,6 @@ class PC2
   def initialize
     @serial_port_list = []
     @threads = []
-    MXLogger.init_logger
     @controller_server = ControllerServer.new
     init_serial_port
     init_socket_server
@@ -21,8 +20,7 @@ class PC2
       @serial_port_list.push serial_port_test
       @threads << Thread.new { serial_port_test.read_func }
   rescue
-      logger = MXLogger.logger
-      logger "open serial port failed."
+      MXLogger.error "open serial port failed."
   end
 
   def wait
