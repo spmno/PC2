@@ -13,6 +13,7 @@ class PC2
 
   def init_socket_server
     @threads << Thread.new { @controller_server.start }
+    @controller_server.add_observer self, :update_socket
   end
 
   def init_serial_port
@@ -25,6 +26,10 @@ class PC2
 
   def wait
     @threads.each { |thr| thr.join }
+  end
+
+  def update_socket(result)
+    MXLogger.debug "update socket #{result}"
   end
 end
 

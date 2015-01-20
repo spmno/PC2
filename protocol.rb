@@ -1,8 +1,12 @@
 require 'json'
 
 class Protocol
+  def initialize
+    @state
+  end
+
   def host_to_controller(content)
-    command_hash = JSON.parser content
+    command_hash = JSON.parse content
 
   end
 
