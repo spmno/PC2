@@ -1,6 +1,7 @@
 require './mx_serial_port'
 require './controller_server'
 require './mx_logger'
+require './protocol'
 
 class PC2
   def initialize
@@ -17,7 +18,7 @@ class PC2
   end
 
   def init_serial_port
-      serial_port_test = MXSerialPort.new "COM6"
+      serial_port_test = MXSerialPort.new "COM7"
       @serial_port_list.push serial_port_test
       @threads << Thread.new { serial_port_test.read_func }
   rescue
@@ -30,6 +31,9 @@ class PC2
 
   def update_socket(result)
     MXLogger.debug "update socket #{result}"
+    #protocol = Protocol.new result
+    #protocol.send_inquire_frame
+    @serial_port_list[0].write
   end
 end
 
