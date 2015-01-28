@@ -1,7 +1,7 @@
 require 'socket'
 require 'json'
 require 'observer'
-require './mx_logger'
+require_relative 'mx_logger'
 
 class ControllerServer
   include Observable
