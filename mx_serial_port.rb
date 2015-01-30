@@ -47,7 +47,7 @@ class MXSerialPort
     end
   end
 
-  def write
+  def test
     loop do
       #a = %q["\xCF" "\xCF" 0  0 "\x73" "\x21" "\xDD" "\xDD"]
       a = ""
@@ -74,6 +74,10 @@ class MXSerialPort
       puts "send2"
       sleep(1)
     end
+  end
+
+  def write(command)
+    @serial_port.write command
   end
 
   def write_on

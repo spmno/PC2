@@ -1,35 +1,53 @@
+# encoding:ascii-8bit
 require 'json'
+require_relative 'mx_logger'
 
 class Protocol
-  def initialize content
-    @content = content
-    #@state
-  end
+  HEADER = ["\xCF", "\xCF", "\x00", "\x00"].join
+  TAIL = ["\xDD", "\xDD"].join
 
-  def send_inquire_frame
-    command_hash = JSON.parse @content
-    command_array = []
-    command_array.push 0xCF, 0xCF
-    command_array.push 0x00, 0x01
-    case command_hash['part']
-      when 'door'
-        command_array.push 0x1
-    end
-    case command_hash['action']
-      when 'open'
-        command_array
-    end
-    command_array
+  def make_command(id, command)
+    HEADER + id + command + TAIL
   end
 
   def host_to_controller
-    command_hash = JSON.parse @content
-    command_array = []
-    command_array.push 0xCF, 0xCF
-    case command_hash['part']
-      when 'door'
-        command_array.push 0x1
+    MXLogger.debug @json_hash.to_s
+
+    case @json_hash['part']
+      when 'door' then make_door_command
+      when 'light' then make_light_command
+      when 'lock' then make_lock_command
+      when 'chair' then make_chair_command
+      else
+        MXLogger.error "unknown part!!!!!!!!!!!!!!!!!!!!!"
     end
+  end
+
+  def make_door_command
+    MXLogger.debug __method__.to_s
+    if json_result['action'] == 'open'
+      MXLogger.debug "receive open command"
+      @serial_port_test.write_on
+    elsif json_result['action'] == 'close'
+      MXLogger.debug "receive close command"
+      @serial_port_test.write_off
+    else
+      MXLogger.debug "unknown command"
+    end
+  end
+
+  def make_light_command
+    MXLogger.debug "method:" + __method__.to_s
+    if json_result['action'] == 'on'
+
+    end
+  end
+
+  def make_lock_command
+
+  end
+
+  def make_chair_command
 
   end
 

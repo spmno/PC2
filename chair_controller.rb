@@ -1,9 +1,33 @@
 require 'rubyserial'
 require_relative 'mx_logger'
+require_relative 'serial_distributor'
+
 class ChairController
-  def initialize(port)
-    MXLogger.debug "port = #{port}"
-    @serial_port = Serial.new(port, "9600".to_i)
+  def initialize
+    @serial_port = SerialDistributor.instance.get_serial "chair"
+  end
+
+  def execute(command)
+    MXLogger.debug __method__.to_s
+    case command
+      when 'start' then start
+      when 'stop' then stop
+      when 'headerup' then header_up
+      when 'headerdown' then header_down
+      when 'backup' then back_up
+      when 'backdown' then back_down
+      when 'hipup' then hip_up
+      when 'hipdown' then hip_down
+      when 'footup' then foot_up
+      when 'footdown' then foot_down
+      when 'waistup' then waist_up
+      when 'waistdown' then waist_down
+      when 'straight' then straight
+      when 'halflaydown' then half_lay_down
+      when 'laydown' then lay_down
+      else
+        MXLogger.error "unknown action!"
+    end
   end
 
   def start
@@ -15,7 +39,7 @@ class ChairController
 
   def send_control_command(command)
     MXLogger.debug __method__.to_s
-    6.times do
+    10.times do
       @serial_port.write command
     end
   end
@@ -52,12 +76,12 @@ class ChairController
 
   def foot_up
     MXLogger.debug __method__.to_s
-    send_control_command "\xB5"
+    send_control_command "\xB6"
   end
 
   def foot_down
     MXLogger.debug __method__.to_s
-    send_control_command "\xB7"
+    send_control_command "\xB8"
   end
 
   def waist_up
@@ -77,17 +101,17 @@ class ChairController
 
   def straight
     MXLogger.debug __method__.to_s
-    @serial_port.write "\x0E"
+    send_control_command "\x0E"
   end
 
   def half_lay_down
     MXLogger.debug __method__.to_s
-    @serial_port.write "\x0F"
+    send_control_command "\x0F"
   end
 
   def lay_down
     MXLogger.debug __method__.to_s
-    @serial_port.write "\x10"
+    send_control_command "\x10"
   end
 
 end
