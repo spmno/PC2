@@ -46,7 +46,7 @@ class PC2
     part = @part_factory.create protocol_hash['part']
     MXLogger.debug "create part #{part}."
     part.execute protocol_hash['action'] if part
-    MXLogger.debug "end update socket"
+    MXLogger.debug 'end update socket'
   end
 
 end

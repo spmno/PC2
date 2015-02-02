@@ -4,7 +4,7 @@ require_relative 'serial_distributor'
 
 class ChairController
   def initialize
-    @serial_port = SerialDistributor.instance.get_serial "chair"
+    @serial_port = SerialDistributor.instance.get_serial 'chair'
   end
 
   def execute(command)
@@ -12,28 +12,33 @@ class ChairController
     case command
       when 'start' then start
       when 'stop' then stop
-      when 'headerup' then header_up
-      when 'headerdown' then header_down
-      when 'backup' then back_up
-      when 'backdown' then back_down
-      when 'hipup' then hip_up
-      when 'hipdown' then hip_down
-      when 'footup' then foot_up
-      when 'footdown' then foot_down
-      when 'waistup' then waist_up
-      when 'waistdown' then waist_down
+      when 'header-up' then header_up
+      when 'header-down' then header_down
+      when 'back-up' then back_up
+      when 'back-down' then back_down
+      when 'hip-up' then hip_up
+      when 'hip-down' then hip_down
+      when 'foot-up' then foot_up
+      when 'foot-down' then foot_down
+      when 'waist-up' then waist_up
+      when 'waist-down' then waist_down
       when 'straight' then straight
-      when 'halflaydown' then half_lay_down
-      when 'laydown' then lay_down
+      when 'half-lay-down' then half_lay_down
+      when 'lay-down' then lay_down
       else
-        MXLogger.error "unknown action!"
+        MXLogger.error 'unknown action!'
     end
   end
 
   def start
     MXLogger.debug __method__.to_s
+    begin
     15.times do
       @serial_port.write "\x01"
+    end
+    rescue
+      MXLogger.debug 'serial port error'
+      #raise "serial error"
     end
   end
 
