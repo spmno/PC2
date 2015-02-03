@@ -11,12 +11,8 @@ class GlobalConfig
     content = file.read(file.size)
     @serials_hash =  JSON.parse content
     @working_serials_hash = @serials_hash.select {|k, v| v["status"] == "on"}
-    @working_serials_hash.map {|k, v| MXLogger.debug "part: #{k}, port: #{v['port']}"}
+    @working_serials_hash.map {|k, v| MXLogger.debug "part: #{k}, port:#{v['port']}, baudrate:#{v['baudrate']} "}
     file.close
-  end
-
-  def get_serial_port_name(port)
-    @serials_hash[port]['port']
   end
 
 end

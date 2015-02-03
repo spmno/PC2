@@ -1,1 +1,1 @@
-{ "front-mid-light":{"port":"\\\\.\\COM15", "status":"on"}, "chair":{"port":"com2", "status":"off"} }
+{ "front-mid-light":{"port":"\\\\.\\COM15", "baudrate":"115200", "status":"on"}, "chair":{"port":"com2", "baudrate":"9600", "status":"off"} }

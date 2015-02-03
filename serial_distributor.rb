@@ -14,7 +14,7 @@ class SerialDistributor
     config = GlobalConfig.instance
     config.working_serials_hash.each do |k, v|
       @serial_hash[k] = v['port']
-      @serial_container[k] = Serial.new(v['port'], "115200".to_i)
+      @serial_container[k] = Serial.new(v['port'], v['baudrate'].to_i)
     end
   end
 
