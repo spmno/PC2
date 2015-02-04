@@ -1,10 +1,10 @@
 require 'rubyserial'
 require_relative 'mx_logger'
-require_relative 'serial_distributor'
+require_relative 'part_distributor'
 
 class ChairController
-  def initialize
-    @serial_port = SerialDistributor.instance.get_serial 'chair'
+  def initialize(serial)
+    @serial_port = serial
   end
 
   def execute(command)

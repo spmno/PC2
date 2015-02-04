@@ -21,10 +21,10 @@ class ControllerServer
       init_hash = JSON.parse init_str
       if init_hash['type'] == 'init' and init_hash['name'] == 'pad'
         @server_container['pad'] = client
-        MXLogger.debug "pad client connected."
+        MXLogger.debug 'pad client connected.'
       else
         @server_container['pc2'] = client
-        MXLogger.debug "pc2 client connected."
+        MXLogger.debug 'pc2 client connected.'
       end
       changed
       notify_observers init_str

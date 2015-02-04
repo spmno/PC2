@@ -4,11 +4,10 @@ require_relative 'protocol'
 require_relative 'mx_logger'
 
 class Light < Protocol
-  attr_accessor :id, :name
+  attr_accessor :id, :serial_port
 
-  def initialize(id, name)
-    @id, @name = id, name
-    @serial_port = SerialDistributor.instance.get_serial @name
+  def initialize(id, serial)
+    @id, @serial_port = id, serial_port
   end
 
   def execute(command)

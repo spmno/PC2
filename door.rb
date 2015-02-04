@@ -2,11 +2,10 @@
 require_relative 'protocol'
 
 class Door < Protocol
-  attr_accessor :id, :name
+  attr_accessor :id, :serial_port
 
-  def initialize(id, name)
-    @id, @name = id, name
-    @serial_port = SerialDistributor.instance.get_serial @name
+  def initialize(id, serial)
+    @id, @serial_port = id, serial
   end
 
   def execute(command)

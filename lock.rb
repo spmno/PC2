@@ -6,7 +6,7 @@ class Lock < Protocol
 
   def initialize(id, name)
     @id, @name = id, name
-    @serial_port = SerialDistributor.instance.get_serial @name
+    @serial_port = PartDistributor.instance.get_serial @name
   end
 
   def execute(command)
